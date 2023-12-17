@@ -1,4 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
+import { mean, sqrt, std } from 'mathjs'; 
+import Plot from 'react-plotly.js';
 import { useParams } from 'react-router-dom';
 import useWebSocket, { ReadyState } from "react-use-websocket";
 import * as tt from "@tomtom-international/web-sdk-maps";
@@ -77,7 +79,7 @@ const MapView = () => {
       // Store received data into an array of objects
       const newData = [...receivedData, { latitude, longitude, timestamp }];
       setReceivedData(newData);
-
+      
       setLat(latitude);
       setLng(longitude);
       updateMap();
@@ -98,7 +100,7 @@ const MapView = () => {
     console.log(receivedData);
     sendJsonMessage({ action: "closeConnection" });
     setConnectionStatus("Disconnected");
-  console.log(receivedData);
+ 
     try {
       const responseUserDetails = await fetch('/api/users/all-details', {
         method: 'GET',
@@ -214,6 +216,75 @@ const MapView = () => {
 
 
 
+  // error probabilty
+  const [errorMetrics, setErrorMetrics] = useState({
+    RMSE: 0,
+    MAE: 0,
+    SDE: 0,
+  });
+
+  const inputData = {
+    GPST: 2105,
+    latitude: 37.423568732,
+    longitude: -122.094108474,
+    height: -28.8393,
+    Q: 2,
+    ns: 0,
+    sdn: 0.1716,
+    sde: 0.2369,
+    sdu: 0.409,
+    sdne: -0.1343,
+    sdeu: 0.1922,
+    sdun: -0.1706,
+    age: -9.56,
+    ratio: 0.0,
+  };
+  //for plot
+  const [uncorrectedData, setUncorrectedData] = useState(null);
+
+  useEffect(() => {
+    const dataValues = Object.values(inputData);
+    const referenceValue = 10; // reference value
+
+    const squaredDifferences = dataValues.map((value) =>
+      Math.pow(value - referenceValue, 2)
+    );
+
+    const RMSE = sqrt(mean(squaredDifferences));
+    const MAE = mean(squaredDifferences.map(val => Math.abs(val)));
+    const SDE = std(squaredDifferences);
+
+    setErrorMetrics({
+      RMSE: RMSE.toFixed(4),
+      MAE: MAE.toFixed(4),
+      SDE: SDE.toFixed(4),
+    });
+
+    // uncorrected data
+    const simulateUncorrectedValue = (value) => {
+      // random deviation
+      const deviation = (Math.random() - 0.5) * 0.09; // i adjusted from 0.01 to 0.06
+      return value + deviation;
+    };
+
+    const simulatedUncorrectedData = {
+      GPST: 2105,
+      latitude: simulateUncorrectedValue(inputData.latitude),
+      longitude: simulateUncorrectedValue(inputData.longitude),
+      height: simulateUncorrectedValue(inputData.height),
+      Q: simulateUncorrectedValue(inputData.Q),
+      ns: simulateUncorrectedValue(inputData.ns),
+      sdn: simulateUncorrectedValue(inputData.sdn),
+      sde: simulateUncorrectedValue(inputData.sde),
+      sdu: simulateUncorrectedValue(inputData.sdu),
+      sdne: simulateUncorrectedValue(inputData.sdne),
+      sdeu: simulateUncorrectedValue(inputData.sdeu),
+      sdun: simulateUncorrectedValue(inputData.sdun),
+      age: simulateUncorrectedValue(inputData.age),
+      ratio: simulateUncorrectedValue(inputData.ratio),
+    };
+    setUncorrectedData(simulatedUncorrectedData);
+  }, [inputData]);
   return (
    
       <Container>
@@ -264,7 +335,59 @@ const MapView = () => {
            
           </Col>
         </Row>
+        <Row>
+        <div className="row">
+        <div className="column">
+          <div className="panel">
+            <h3>Error Metrics</h3>
+            <p>RMSE: {errorMetrics.RMSE}</p>
+            <p>MAE: {errorMetrics.MAE}</p>
+            <p>SDE: {errorMetrics.SDE}</p>
+          </div>
+        </div>
+        {/* Plotly graph */}
+        <div className="column">
+        <Plot
+  data={[
+    {
+      x: [inputData.latitude],
+      y: [inputData.longitude],
+      z: [inputData.height],
+      mode: 'markers+text',
+      type: 'scatter3d',
+      marker: { size: 5, color: 'blue' },
+      text: ['Corrected Data'],
+      textposition: 'top center',
+      textfont: { size: 12 },
+      name: 'Corrected Data',
+    },
+    {
+      x: [uncorrectedData?.latitude],
+      y: [uncorrectedData?.longitude],
+      z: [uncorrectedData?.height],
+      mode: 'markers+text',
+      type: 'scatter3d',
+      marker: { size: 5, color: 'red' },
+      text: ['Uncorrected Data'],
+      textposition: 'top center',
+      textfont: { size: 12 },
+      name: 'Uncorrected Data',
+    },
+  ]}
+  layout={{
+    title: 'Positional Deviation',
+    scene: {
+      xaxis: { title: 'Latitude', range: [inputData.latitude - 0.5, inputData.latitude + 0.5] },
+      yaxis: { title: 'Longitude', range: [inputData.longitude - 0.5, inputData.longitude + 0.5] },
+      zaxis: { title: 'Height', range: [inputData.height - 0.5, inputData.height + 0.5] },
+    },
+  }}
+/>
 
+
+        </div>
+      </div>
+      </Row>
         {/* Received data table
         <Row>
           <Col xs="12">
