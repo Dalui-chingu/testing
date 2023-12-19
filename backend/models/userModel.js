@@ -114,37 +114,6 @@ const userSchema = mongoose.Schema(
   }
 );
 
-const additionalCollectionSchema = mongoose.Schema({
-  mountpoint: {
-    type: String,
-    required: true,
-  },
-  status: {
-    type: String,
-    required: true,
-  },
-  lastUpdated: {
-    type: String,
-    required: true,
-  },
-  location: {
-    latitude: {
-      type: Number,
-      required: true,
-    },
-    longitude: {
-      type: Number,
-      required: true,
-    },
-  },
-  authorized: {
-    type: Boolean,
-    required: true,
-  },
-});
-
-const baseStation = mongoose.model('baseStation', additionalCollectionSchema);
-
 
 
 // Match user entered password to hashed password in database
@@ -164,4 +133,4 @@ userSchema.pre('save', async function (next) {
 
 const User = mongoose.model('User', userSchema);
 
-export { User, AdditionalCollection };
+export default User;

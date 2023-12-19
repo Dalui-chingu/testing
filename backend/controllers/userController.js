@@ -115,7 +115,7 @@ const updateUserProfile = asyncHandler(async (req, res) => {
 
 
 
-export { getAuthorizedBaseStations };
+
 const createSubscription = asyncHandler(async (req, res) => {
   const {
     mountPoint,
