@@ -3,51 +3,51 @@ import bcrypt from 'bcryptjs';
 
 const baseStationSchema = mongoose.Schema({
   mountpoint: {
-    type: Number,
+    type: String,
     required: true,
   },
-  gpst: {
-    type: Number,
-    required: true,
+  GPST: {
+    type: String,
+    required: false,
   },
   height: {
-    type: Number,
+    type: String,
     required: true,
   },
   q: {
-    type: Number,
+    type: String,
     required: true,
   },
   ns: {
-    type: Number,
+    type: String,
     required: true,
   },
   sdn: {
-    type: Number,
+    type: String,
     required: true,
   },
   sde: {
-    type: Number,
+    type: String,
     required: true,
   },
   sdu: {
-    type: Number,
+    type: String,
     required: true,
   },
   sdne: {
-    type: Number,
+    type: String,
     required: true,
   },
   sdeu: {
-    type: Number,
+    type: String,
     required: true,
   },
   sdun: {
-    type: Number,
+    type: String,
     required: true,
   },
   age: {
-    type: Number,
+    type: String,
     required: true,
   },
   ratio: {
@@ -63,8 +63,8 @@ const baseStationSchema = mongoose.Schema({
     required: true,
   },
   timestamp: {
-    type: Date,
-    default: Date.now,
+    type: String,
+    required: true,
   },
 });
 

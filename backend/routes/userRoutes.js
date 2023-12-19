@@ -20,7 +20,6 @@ router.post('/logout', logoutUser);
 router.post('/subscribe', protect, createSubscription);
 router.get('/all-details', protect, getUserDetails);
 router.put('/update-base-station-data/:userId/:subscriptionId',protect, updateBaseStationData);
-
 router
   .route('/profile')
   .get(protect, getUserProfile)
