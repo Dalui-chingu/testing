@@ -23,14 +23,14 @@ const DashboardDefault = () => {
 
       {/* Position Section */}
       <Grid item xs={12} sm={6} md={4} lg={3}>
-        <div style={{ boxShadow: 'rgba(149,157,165,0.2) 0px 8px 24px' }}>
+        <div style={{ boxShadow: 'rgba(149,157,165,0.2) 0px 8px 24px' , borderRadius: '15px'}}>
           <AnalyticEcommerce title="Positioning Mode" count="Kinematics" />
         </div>
       </Grid>
 
       {/* Quality Factor Section */}
       <Grid item xs={12} sm={6} md={4} lg={3}>
-        <div style={{ boxShadow: 'rgba(149,157,165,0.2) 0px 8px 24px' }}>
+        <div style={{ boxShadow: 'rgba(149,157,165,0.2) 0px 8px 24px', borderRadius: '15px'}}>
           <AnalyticEcommerce title="Quality Factor" count="-" />
         </div>
       </Grid>
@@ -43,51 +43,51 @@ const DashboardDefault = () => {
     
 
       <Grid item xs={6} >
-        <div style={{boxShadow:'rgba(149,157,165,0.2) 0px 8px 24px',marginBottom:'10px'}}>
+        <div style={{boxShadow:'rgba(149,157,165,0.2) 0px 8px 24px',marginBottom:'10px', borderRadius: '15px'}}>
         <AnalyticEcommerce title="Latitude" count="0°"   extra="± 0.000 m" />
         </div>
-        <div style={{boxShadow:'rgba(149,157,165,0.2) 0px 8px 24px',marginBottom:'10px'}}>
+        <div style={{boxShadow:'rgba(149,157,165,0.2) 0px 8px 24px',marginBottom:'10px',borderRadius: '15px'}}>
         <AnalyticEcommerce title="Longitude" count="0°"  extra="± 0.000 m" />
         </div>
-        <div style={{boxShadow:'rgba(149,157,165,0.2) 0px 8px 24px',marginBottom:'10px'}}>
+        <div style={{boxShadow:'rgba(149,157,165,0.2) 0px 8px 24px',marginBottom:'10px',borderRadius: '15px'}}>
         <AnalyticEcommerce title="Height" count="0 m" extra="± 0.000 m" />
         </div>
       </Grid>
      
       <Grid item xs={6} sm={3.5} md={2.5} lg={2.5}>
-      <div style={{ boxShadow: 'rgba(149,157,165,0.2) 0px 8px 24px', marginBottom: '10px' }}>
+      <div style={{ boxShadow: 'rgba(149,157,165,0.2) 0px 8px 24px', marginBottom: '10px',borderRadius: '15px'}}>
       
         <AnalyticEcommerce title="North" count="0" />
       </div>
-      <div style={{ boxShadow: 'rgba(149,157,165,0.2) 0px 8px 24px', marginBottom: '10px' }}>
+      <div style={{ boxShadow: 'rgba(149,157,165,0.2) 0px 8px 24px', marginBottom: '10px',borderRadius: '15px' }}>
         <AnalyticEcommerce title="East" count="0" />
       </div>
-      <div style={{ boxShadow: 'rgba(149,157,165,0.2) 0px 8px 24px', marginBottom: '10px' }}>
+      <div style={{ boxShadow: 'rgba(149,157,165,0.2) 0px 8px 24px', marginBottom: '10px',borderRadius: '15px' }}>
         <AnalyticEcommerce title="Up" count="0" />
       </div>
     </Grid>
       {/* Coord Corr Triplet Section */}
       <Grid item xs={6} sm={3.5} md={2.5} lg={2.5}>
-        <div style={{ boxShadow: 'rgba(149,157,165,0.2) 0px 8px 24px', marginBottom: '10px' }}>
+        <div style={{ boxShadow: 'rgba(149,157,165,0.2) 0px 8px 24px', marginBottom: '10px',borderRadius: '15px' }}>
           <AnalyticEcommerce title="North-East" count="0" />
         </div>
-        <div style={{ boxShadow: 'rgba(149,157,165,0.2) 0px 8px 24px', marginBottom: '10px' }}>
+        <div style={{ boxShadow: 'rgba(149,157,165,0.2) 0px 8px 24px', marginBottom: '10px',borderRadius: '15px' }}>
           <AnalyticEcommerce title="East-Up" count="0" />
         </div>
-        <div style={{ boxShadow: 'rgba(149,157,165,0.2) 0px 8px 24px', marginBottom: '10px' }}>
+        <div style={{ boxShadow: 'rgba(149,157,165,0.2) 0px 8px 24px', marginBottom: '10px',borderRadius: '15px' }}>
           <AnalyticEcommerce title="Up-North" count="0" />
         </div>
       </Grid>
 
       <Grid item xs={8}>
       <h3>Base Position</h3>
-      <div style={{boxShadow:'rgba(149,157,165,0.2) 0px 8px 24px',marginBottom:'10px'}}>
+      <div style={{boxShadow:'rgba(149,157,165,0.2) 0px 8px 24px',marginBottom:'10px',borderRadius: '15px'}}>
       <AnalyticEcommerce title="Latitude" count="0°"   />
       </div>
-      <div style={{boxShadow:'rgba(149,157,165,0.2) 0px 8px 24px',marginBottom:'10px'}}>
+      <div style={{boxShadow:'rgba(149,157,165,0.2) 0px 8px 24px',marginBottom:'10px',borderRadius: '15px'}}>
       <AnalyticEcommerce title="Longitude" count="0°"  />
       </div>
-      <div style={{boxShadow:'rgba(149,157,165,0.2) 0px 8px 24px',marginBottom:'10px'}}>
+      <div style={{boxShadow:'rgba(149,157,165,0.2) 0px 8px 24px',marginBottom:'10px',borderRadius: '15px'}}>
       <AnalyticEcommerce title="Height" count="0 m"  />
       </div>
       </Grid>
@@ -97,13 +97,13 @@ const DashboardDefault = () => {
 
       <Grid item xs={6} sm={6} md={4} lg={3}>
         <h3>RTK Parameters</h3>
-        <div style={{boxShadow:'rgba(149,157,165,0.2) 0px 8px 24px',marginBottom:'10px'}}>
+        <div style={{boxShadow:'rgba(149,157,165,0.2) 0px 8px 24px',marginBottom:'10px',borderRadius: '15px'}}>
         <AnalyticEcommerce count="0.0s"  extra="Age of differential"  />
         </div>
-        <div style={{boxShadow:'rgba(149,157,165,0.2) 0px 8px 24px',marginBottom:'10px'}}>
+        <div style={{boxShadow:'rgba(149,157,165,0.2) 0px 8px 24px',marginBottom:'10px',borderRadius: '15px'}}>
         <AnalyticEcommerce count="0.o" extra="AR validation ratio" />
         </div>
-        <div style={{boxShadow:'rgba(149,157,165,0.2) 0px 8px 24px',marginBottom:'10px'}}>
+        <div style={{boxShadow:'rgba(149,157,165,0.2) 0px 8px 24px',marginBottom:'10px',borderRadius: '15px'}}>
         <AnalyticEcommerce count="0.00 m" extra="Baseline" />
         </div>
       </Grid>

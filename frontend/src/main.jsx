@@ -33,7 +33,7 @@ const router = createBrowserRouter(
       
       <Route path='' element={<PrivateRoute />}>
          {/* Users routes */}
-    <Route exact path="/logstatus" element={<LogStatus/>} />
+    <Route exact path="/logdata/:subid" element={<LogStatus/>} />
     <Route exact path="/datasubcription" element={<DataSubscriptionPage/>} />
     <Route exact path="/usersettings" element={<UserSettings/>} />
     <Route exact path="/map/:basemountpoint/*" element={<MapView/>} />

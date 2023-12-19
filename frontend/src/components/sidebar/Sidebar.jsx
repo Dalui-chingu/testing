@@ -55,7 +55,7 @@ const barGraphSVGPath = "M16 384h64v-256h-64v256zM112 384h64v-192h-64v192zM208 3
 
           
           <li>
-          <SideBarButton  buttonText="Statistics" route="/" svgPath={barGraphSVGPath} />
+          <SideBarButton  buttonText="Subscription Plan" route="/" svgPath={barGraphSVGPath} />
           </li>
 
           <p></p>
@@ -64,10 +64,7 @@ const barGraphSVGPath = "M16 384h64v-256h-64v256zM112 384h64v-192h-64v192zM208 3
 
           <p className="title">Services</p>
           
-          <li>
-          <SideBarButton buttonText="Log Status" route="/logstatus" svgPath={logDetailsSVGPath} />
-          </li>
-
+          
           <p></p>
 
           <li>
@@ -84,7 +81,7 @@ const barGraphSVGPath = "M16 384h64v-256h-64v256zM112 384h64v-192h-64v192zM208 3
 
           <li>
          
-          <SideBarButton buttonText="Map" route="/mapview" svgPath={mapSVGPath} />
+          <SideBarButton buttonText="Nearby BaseStation" route="/nearby" svgPath={mapSVGPath} />
          
           </li>
 

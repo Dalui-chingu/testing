@@ -8,7 +8,7 @@ import FloatingButton from './elements/Chatbot/Floatingbtn';
 const App = () => {
   return (
     <>
-      <Header />
+      
       <ToastContainer />
       
         <Outlet />

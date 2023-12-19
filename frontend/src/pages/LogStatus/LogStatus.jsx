@@ -1,199 +1,83 @@
 import React, { useEffect, useState } from "react";
+import { useParams } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import { Link } from "react-router-dom";
 import DataTable from "react-data-table-component";
-import '../LogStatus/LogStatus.css';
 import { CSVLink } from 'react-csv';
 import Sidebar from "../../components/sidebar/Sidebar";
 import ExportButton from "../../elements/ExportButton/ExportButton";
+
 export default function LogTable() {
-  const column = [
-    {
-      name: "Timestamp (IST)",
-      selector: (row) => row.timestamp,
-      width: "200px",
-    },
-    {
-      name: "Correction Type",
-      selector: (row) => row.correctionType,
-      width: "150px",
-    },
-    {
-      name: "Source",
-      selector: (row) => row.source,
-      width: "150px",
-    },
-    {
-      name: "Mount Point",
-      selector: (row) => row.mountPoint,
-      width: "150px",
-    },
-    {
-      name: "Latitude (°N)",
-      selector: (row) => row.latitude,
-      width: "100px",
-    },
-    {
-      name: "Longitude (°E)",
-      selector: (row) => row.longitude,
-      width: "100px",
-    },
-    {
-      name: "Elevation (m)",
-      selector: (row) => row.elevation,
-      width: "100px",
-    },
-    {
-      name: "Correction Data",
-      selector: (row) => row.correctionData,
-      width: "200px",
-    },
-  ];
-  // Define a function to retrieve data from local storage
-  const getDataFromLocalStorage = () => {
-    const savedData = localStorage.getItem("logData");
-    return savedData ? JSON.parse(savedData) : [];
-  };
-  const [data, setData] = useState(getDataFromLocalStorage());
-  const [search, setSearch] = useState("");
+  const { subid } = useParams();
+  const { userInfo } = useSelector((state) => state.auth);
+  const [data, setData] = useState([]);
   const [filter, setFilter] = useState([]);
 
-  useEffect(() => {
-    // Store the data in local storage when the component updates
-    localStorage.setItem("logData", JSON.stringify(data));
-  }, [data]);
+  const customStyles = {
+    headCells: {
+      style: {
+          minWidth:"300px"
+      },
+  }
+  }
 
   useEffect(() => {
-    // Here, you should fetch or set your log data, which would be an array of objects similar to the example values provided.
-    // For this example, I'll use the example log entries as the initial data.
-    const initialData = [
-      {
-        timestamp: "2023-10-29 15:30:00 IST",
-        correctionType: "RTCM 3.2",
-        source: "Local Base",
-        mountPoint: "DELGNSS01",
-        latitude: "28.612347° N",
-        longitude: "77.234566° E",
-        elevation: "210.5 m",
-        correctionData:
-          "RTCM 1077 ( 156): staid=    0 2023/10/29  15:30:00 nsat= 9 nsig = 1 iod=0 ncell= 9 sync=1",
-      },
-      {
-        timestamp: "2023-10-29 15:31:00 IST",
-        correctionType: "RTCM 3.2",
-        source: "Regional Ref.",
-        mountPoint: "DELGNSS01", // Matching mount point
-        latitude: "28.612346° N", // Matching latitude
-        longitude: "77.234566° E", // Matching longitude
-        elevation: "98.0 m",
-        correctionData:
-          "RTCM 1087 ( 112): staid=    0 2023/10/29  15:31:00 nsat= 6 nsig = 1 iod=0 ncell= 6 sync=0",
-      },
-      {
-        timestamp: "2023-10-29 15:32:00 IST",
-        correctionType: "RTCM 3.2",
-        source: "Local Base",
-        mountPoint: "DELGNSS01", // Matching mount point
-        latitude: "28.612344° N", // Matching latitude
-        longitude: "77.234567° E", // Matching longitude
-        elevation: "109.2 m",
-        correctionData:
-          "RTCM 1077 ( 156): staid=    0 2023/10/29  15:32:00 nsat= 6 nsig = 1 iod=0 ncell= 6 sync=0", // Updated staid and timestamp
-      },
-      {
-        timestamp: "2023-10-29 15:33:00 IST",
-        correctionType: "RTCM 3.3",
-        source: "National Ref.",
-        mountPoint: "DELGNSS01", // Matching mount point
-        latitude: "28.612345° N", // Matching latitude
-        longitude: "77.234567° E", // Matching longitude
-        elevation: "95.8 m",
-        correctionData:
-          "RTCM 1077 ( 156): staid=    0 2023/10/29  15:33:00 nsat= 9 nsig = 1 iod=0 ncell= 9 sync=1", // Updated staid and timestamp
-      },
-      {
-        timestamp: "2023-10-27 12:43:00 IST",
-        correctionType: "RTCM 3.2",
-        source: "Local Base",
-        mountPoint: "DELGNSS01", // Same mountPoint
-        latitude: "28.612345° N", // Same latitude
-        longitude: "77.234567° E", // Same longitude
-        elevation: "102.5 m",
-        correctionData:
-          "RTCM 1087 ( 112): staid=    0 2023/10/27  12:43:00 nsat= 6 nsig = 1 iod=0 ncell= 6 sync=0",
-      },
-      {
-        timestamp: "2023-10-29 12:42:00 IST",
-        correctionType: "RTCM 3.2",
-        source: "Regional Ref.",
-        mountPoint: "DELGNSS01", // Same mountPoint
-        latitude: "28.612345° N", // Same latitude
-        longitude: "77.234567° E", // Same longitude
-        elevation: "105.0 m",
-        correctionData: " RTCM 1077 ( 156): staid=    0 2023/10/29  12:42:00 nsat= 9 nsig = 1 iod=0 ncell= 9 sync=1",
-      },
-      {
-        timestamp: "2023-10-27 12:37:00 IST",
-        correctionType: "RTCM 3.3",
-        source: "National Ref.",
-        mountPoint: "DELGNSS01", // Same mountPoint
-        latitude: "28.612345° N", // Same latitude
-        longitude: "77.234567° E", // Same longitude
-        elevation: "88.9 m",
-        correctionData:
-          "RTCM 1087 ( 112): staid=    0 2023/10/27  12:37:00 nsat= 6 nsig = 1 iod=0 ncell= 6 sync=0",
-      },
-      {
-        timestamp: "2023-10-29 12:36:00 IST",
-        correctionType: "RTCM 3.3",
-        source: "Regional Ref.",
-        mountPoint: "DELGNSS01", // Same mountPoint
-        latitude: "28.612345° N", // Same latitude
-        longitude: "77.234567° E", // Same longitude
-        elevation: "96.7 m",
-        correctionData:
-          "RTCM 1077 ( 156): staid=    0 2023/10/29  12:36:00 nsat= 9 nsig = 1 iod=0 ncell= 9 sync=1"
-      },
-      {
-        timestamp: "2023-10-27 18:55:00 IST",
-        correctionType: "RTCM 3.3",
-        source: "Local Base",
-        mountPoint: "KOLGNSS09",
-        latitude: "22.345678° N",
-        longitude: "88.123456° E",
-        elevation: "110.2 m",
-        correctionData:
-          "RTCM 1077 ( 156): staid=    0 2023/10/27  18:55:00 nsat= 9 nsig = 1 iod=0 ncell= 9 sync=1",
-      },
-      {
-        timestamp: "2023-10-27 18:53:00 IST",
-        correctionType: "RTCM 3.2",
-        source: "National Ref.",
-        mountPoint: "KOLGNSS09",
-        latitude: "22.345678° N",
-        longitude: "88.123456° E",
-        elevation: "97.5 m",
-        correctionData:
-          "RTCM 1087 ( 112): staid=    0 2023/10/27  18:53:00 nsat= 6 nsig = 1 iod=0 ncell= 6 sync=0",
-      },
+    const fetchUserDetails = async () => {
+      try {
+        const response = await fetch('/api/users/all-details', {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${userInfo.token}`,
+          },
+        });
 
-      // Add more log entries here...
-    ];
-    setData(initialData);
-    setFilter(initialData);
-  }, []);
+        if (!response.ok) {
+          throw new Error('Error fetching user details');
+        }
 
-  useEffect(() => {
-    const result = data.filter((item) => {
-      return (
-        item.timestamp.toLowerCase().includes(search.toLowerCase()) ||
-        item.correctionType.toLowerCase().includes(search.toLowerCase()) ||
-        item.source.toLowerCase().includes(search.toLowerCase()) ||
-        item.mountPoint.toLowerCase().includes(search.toLowerCase())
-        // Add similar lines for other properties you want to filter by
-      );
-    });
-    setFilter(result);
-  }, [search]);
+        const userData = await response.json();
+        console.log('userData:', userData); // Log the userData to see the structure
+
+        const subscription = userData.subscriptions.find((sub) => sub._id === subid);
+
+        if (subscription) {
+          console.log('Subscription found:', subscription); // Log the subscription to inspect baseStationdata
+          setData(subscription.baseStationdata);
+          setFilter(subscription.baseStationdata);
+        } else {
+          console.error(`Subscription with ID ${subid} not found.`);
+          // Handle case when subscription is not found
+        }
+      } catch (error) {
+        console.error('Error fetching user details:', error);
+        // Handle error (e.g., show an error message to the user)
+      }
+    };
+
+    fetchUserDetails();
+  }, [subid, userInfo.token]);
+
+  console.log('data:', data); // Log the data fetched to check its contents
+
+  const columns = [
+    // Define your columns as needed
+    // For example:
+    { name: 'Mount Point', selector: 'mountpoint', sortable: true },
+    { name: 'latitude', selector: 'latitude', sortable: true },
+    { name: 'longitude', selector: 'longitude', sortable: true },
+    { name: 'Received time', selector: 'timestamp', sortable: true, style:{minWidth:"300px"}},
+    { name: 'Height', selector: 'height', sortable: true },
+    { name: 'sdn', selector: 'sdn', sortable: true },
+    { name: 'sde', selector: 'sde', sortable: true },
+    { name: 'sdu', selector: 'sdu', sortable: true },
+    { name: 'sdne', selector: 'sdne', sortable: true },
+    { name: 'sdeu', selector: 'sdeu', sortable: true },
+    { name: 'sdun', selector: 'sdun', sortable: true },
+    { name: 'Age', selector: 'age', sortable: true },
+    { name: 'latitude', selector: 'latitude', sortable: true },
+    // Include other columns similarly
+  ];
 
   return (
     <div style={{display:'flex',width:'100%',marginBottom:'100px',marginTop:'30px'}}>
@@ -232,30 +116,22 @@ export default function LogTable() {
         
         </div>
 
-        <DataTable
-          columns={column}
-          data={filter}
-          pagination
-          selectableRows
-          fixedHeader
-          selectableRowsHighlight
-          highlightOnHover
-          subHeader
-          subHeaderComponent={
-            <input
-              type="text"
-              className="w-25 form-control"
-              placeholder="Search..."
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-            />
-          }
-          subHeaderAlign="right"
-        />
+        <div className="table-container">
+  <DataTable
+  customStyles={customStyles}
+    columns={columns}
+    data={filter}
+    pagination
+    selectableRows
+    fixedHeader
+    selectableRowsHighlight
+    highlightOnHover
+  />
+</div>
 
       </React.Fragment>
     </div>
     </div>
+ 
   );
-
 }

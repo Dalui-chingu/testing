@@ -153,7 +153,9 @@ const createSubscription = asyncHandler(async (req, res) => {
         age: 0,
         ratio: 0,
         latitude: 0, // Fill in with actual latitude
-        longitude: 0, // Fill in with actual longitude
+        longitude: 0,
+        timestamp:0,
+        // Fill in with actual longitude
       }],
       // Include other subscription details as needed
       // ...
@@ -203,6 +205,8 @@ const updateBaseStationData = async (req, res) => {
   const { userId, subscriptionId } = req.params;
   const { receivedData } = req.body;
 
+  console.log(receivedData);
+
   try {
     // Retrieve user by userId
     const user = await User.findById(userId);
@@ -219,7 +223,24 @@ const updateBaseStationData = async (req, res) => {
     }
 
     // Update baseStationData for the subscription
-    subscription.baseStationdata.push(...receivedData);
+    const updatedBaseStationData = receivedData.map(data => {
+      // Ensure that the required fields are present
+      const updatedData = {
+        q: data.q || "", // Set a default value or handle this case as needed
+        
+        mountpoint: data.mountpoint || "",
+        height:data.height||"",
+        ns:data.ns||"",
+        sdn:data.sdn||"",
+        sde:data.sde||"",
+        // Include other required fields similarly
+        // ...
+        ...data, // Include other fields from data
+      };
+      return updatedData;
+    });
+    
+    subscription.baseStationdata.push(...updatedBaseStationData);
 
     // Save the updated user
     await user.save();

@@ -1,11 +1,17 @@
-import PropTypes from 'prop-types';
-import { forwardRef } from 'react';
-import { useTheme } from '@mui/material/styles';
-import { Card, CardContent, CardHeader, Divider, Typography } from '@mui/material';
+import PropTypes from "prop-types";
+import { forwardRef } from "react";
+import { useTheme } from "@mui/material/styles";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  Divider,
+  Typography,
+} from "@mui/material";
 
 const headerSX = {
   p: 2.5,
-  '& .MuiCardHeader-action': { m: '0px auto', alignSelf: 'center' }
+  "& .MuiCardHeader-action": { m: "0px auto", alignSelf: "center" },
 };
 
 const MainCard = forwardRef(
@@ -28,7 +34,7 @@ const MainCard = forwardRef(
     ref
   ) => {
     const theme = useTheme();
-    boxShadow = theme.palette.mode === 'dark' ? boxShadow || true : boxShadow;
+    boxShadow = theme.palette.mode === "dark" ? boxShadow || true : boxShadow;
 
     return (
       <Card
@@ -36,31 +42,45 @@ const MainCard = forwardRef(
         ref={ref}
         {...others}
         sx={{
-          border: border ? '1px solid' : 'none',
-          borderRadius: 2,
-          borderColor: theme.palette.mode === 'dark' ? theme.palette.divider : theme.palette.grey['800'],
-          boxShadow: boxShadow && (!border || theme.palette.mode === 'dark') ? shadow || theme.customShadows.z1 : 'inherit',
-          ':hover': {
-            boxShadow: boxShadow ? shadow || theme.customShadows.z1 : 'inherit'
+          border: "none",
+          borderRadius: 2, // Adjust this value
+          boxShadow:
+            boxShadow && (!border || theme.palette.mode === "dark")
+              ? "0 4px 8px rgba(0, 0, 0, 0.1)"
+              : "inherit",
+          ":hover": {
+            boxShadow: boxShadow ? "0 4px 8px rgba(0, 0, 0, 0.1)" : "inherit",
           },
-          '& pre': {
+          "& pre": {
             m: 0,
-            p: '16px !important',
+            p: "16px !important",
             fontFamily: theme.typography.fontFamily,
-            fontSize: '0.75rem'
+            fontSize: "0.75rem",
           },
-          ...sx
+          ...sx,
         }}
       >
         {!darkTitle && title && (
-          <CardHeader sx={headerSX} titleTypographyProps={{ variant: 'subtitle1' }} title={title} action={secondary} />
+          <CardHeader
+            sx={headerSX}
+            titleTypographyProps={{ variant: "subtitle1" }}
+            title={title}
+            action={secondary}
+          />
         )}
-        {darkTitle && title && <CardHeader sx={headerSX} title={<Typography variant="h3">{title}</Typography>} action={secondary} />}
-        {content && <CardContent sx={contentSX}>{children}</CardContent>}
+        {darkTitle && title && (
+          <CardHeader
+            sx={headerSX}
+            title={<Typography variant="h3">{title}</Typography>}
+            action={secondary}
+          />
+        )}
+        {content && <CardContent sx={contentSX}>{children}
+        </CardContent>}
         {!content && children}
         {codeHighlight && (
           <>
-            <Divider sx={{ borderStyle: 'dashed' }} />
+            <Divider sx={{ borderStyle: "dashed" }} />
           </>
         )}
       </Card>
@@ -68,7 +88,7 @@ const MainCard = forwardRef(
   }
 );
 
-MainCard.displayName = 'MainCard';
+MainCard.displayName = "MainCard";
 
 MainCard.propTypes = {
   border: PropTypes.bool,
@@ -82,7 +102,7 @@ MainCard.propTypes = {
   title: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
   codeHighlight: PropTypes.bool,
   content: PropTypes.bool,
-  children: PropTypes.node
+  children: PropTypes.node,
 };
 
 export default MainCard;

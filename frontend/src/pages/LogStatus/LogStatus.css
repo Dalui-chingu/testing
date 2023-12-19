@@ -134,3 +134,8 @@ h1 {
 .back-button:hover {
   background-color: #0056b3;
 }
+/* Add or modify CSS */
+.table-container {
+  overflow-x: auto;
+  max-width: 100%;
+}

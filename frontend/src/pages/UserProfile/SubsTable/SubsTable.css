@@ -7,15 +7,14 @@ html {
 
 /* Container styles */
 .container-xl {
-    width: 100%;
+    max-width:100%;
     margin: 0 auto;
-    max-width: 1300px; /* Adjust max-width based on your preference */
+    /* Adjust max-width based on your preference */
 }
 
 /* Header styles */
 .card-header {
-    width: 100%;
-    background-color: white;
+    background-color: #fff;
     color: #000;
     font-weight: 600;
     padding: 1rem 1.35rem;
@@ -24,9 +23,8 @@ html {
 
 /* Table styles */
 .table {
-    width: 100%;
     margin-bottom: 1rem;
-    color: #495057;
+    color: white;
     border-collapse: collapse;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Add subtle box shadow */
 }
@@ -59,7 +57,6 @@ html {
 /* Pending badge */
 .badge.bg-light.text-dark {
     background-color: #f8f9fa;
-    color: #343a40;
 }
 
 /* Paid badge */
@@ -80,7 +77,7 @@ html {
     .table {
         width: 100%;
         margin-bottom: 1rem;
-        color: #495057;
+        color: white;
         border-collapse: collapse;
     }
 
@@ -88,4 +85,11 @@ html {
     .table td {
         white-space: nowrap;
     }
+}
+
+.table td:nth-child(1),
+.table td:nth-child(2),
+.table td:nth-child(3) {
+  
+  padding-top:25px;
 }
