@@ -158,6 +158,9 @@ const createSubscription = asyncHandler(async (req, res) => {
         longitude: 0,
         timestamp:0,
         // Fill in with actual longitude
+        longitude: 0,
+        timestamp:0,
+        // Fill in with actual longitude
       }],
       // Include other subscription details as needed
       // ...
